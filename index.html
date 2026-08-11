@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CropSOS | AI Crop Rescue</title>
+
+<style>
+
+/* =========================
+   BASIC SETTINGS
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(
+        135deg,
+        #effff5,
+        #eef8ff,
+        #fff9e8
+    );
+
+    color: #17352a;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+    background: linear-gradient(
+        90deg,
+        #087f5b,
+        #10a66f
+    );
+
+    color: white;
+
+    padding: 18px 6%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 10;
+
+    box-shadow: 0 4px 18px rgba(8,127,91,0.2);
+}
+
+.logo {
+    font-size: 26px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #ffe066;
+}
+
+.navtag {
+    background: rgba(255,255,255,0.15);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    padding: 55px 6% 30px;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: clamp(35px,5vw,58px);
+    color: #075e45;
+}
+
+.hero h1 span {
+    color: #f59f00;
+}
+
+.hero p {
+    max-width: 760px;
+    margin: 15px auto;
+
+    color: #557064;
+
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   MAIN CONTAINER
+========================= */
+
+.container {
+    width: 88%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 22px;
+
+    margin: 25px 0;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+    background: white;
+
+    border-radius: 22px;
+
+    padding: 25px;
+
+    box-shadow: 0 12px 35px rgba(23,53,42,0.08);
+
+    border: 1px solid #dcefe6;
+}
+
+.card h2 {
+    font-size: 21px;
+
+    margin-bottom: 18px;
+
+    color: #075e45;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.label {
+    font-weight: 700;
+
+    font-size: 14px;
+
+    margin: 15px 0 8px;
+
+    display: block;
+}
+
+input,
+textarea,
+select {
+
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 2px solid #dcefe6;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    font-size: 15px;
+
+    background: #fbfffd;
+}
+
+input:focus,
+textarea:focus {
+
+    border-color: #10a66f;
+}
+
+
+/* =========================
+   LOCATION
+========================= */
+
+.location-row {
+
+    display: grid;
+
+    grid-template-columns: 1fr auto;
+
+    gap: 10px;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+
+    border: none;
+
+    border-radius: 12px;
+
+    padding: 13px 18px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+button:hover {
+
+    transform: translateY(-2px);
+}
+
+.gps {
+
+    background: #e7f5ff;
+
+    color: #1971c2;
+}
+
+.analyze {
+
+    width: 100%;
+
+    margin-top: 18px;
+
+    background: linear-gradient(
+        90deg,
+        #087f5b,
+        #10a66f
+    );
+
+    color: white;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   IMAGE UPLOAD
+========================= */
+
+.upload {
+
+    border: 2px dashed #75c9a5;
+
+    border-radius: 18px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    background: #f5fff9;
+
+    cursor: pointer;
+}
+
+.upload input {
+
+    display: none;
+}
+
+.preview {
+
+    max-width: 100%;
+
+    max-height: 220px;
+
+    border-radius: 15px;
+
+    margin-top: 15px;
+
+    display: none;
+}
+
+
+/* =========================
+   WEATHER
+========================= */
+
+.weather {
+
+    display: grid;
+
+    grid-template-columns: repeat(4,1fr);
+
+    gap: 10px;
+}
+
+.weather-box {
+
+    padding: 15px;
+
+    border-radius: 15px;
+
+    background: #f3faff;
+
+    text-align: center;
+}
+
+.weather-box strong {
+
+    display: block;
+
+    font-size: 20px;
+
+    color: #1971c2;
+
+    margin: 6px 0;
+}
+
+
+/* =========================
+   SMALL TEXT
+========================= */
+
+.small {
+
+    font-size: 13px;
+
+    color: #71857b;
+
+    margin-top: 8px;
+}
+
+
+/* =========================
+   RESULT SECTION
+========================= */
+
+.result {
+
+    margin: 30px 0;
+
+    display: none;
+}
+
+.result-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr 1fr;
+
+    gap: 18px;
+}
+
+.result-card {
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    background: white;
+}
+
+
+/* DISEASE */
+
+.disease {
+
+    border-left: 6px solid #f59f00;
+
+    background: #fff9e6;
+}
+
+
+/* TREATMENT */
+
+.treatment {
+
+    border-left: 6px solid #10a66f;
+
+    background: #effcf5;
+}
+
+
+/* ACTION */
+
+.action {
+
+    border-left: 6px solid #1971c2;
+
+    background: #eef7ff;
+}
+
+.result-card h3 {
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================
+   BADGE
+========================= */
+
+.badge {
+
+    display: inline-block;
+
+    padding: 7px 11px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    background: #fff3bf;
+
+    color: #8d5d00;
+}
+
+
+/* =========================
+   CONFIDENCE
+========================= */
+
+.score {
+
+    font-size: 31px;
+
+    font-weight: 800;
+
+    color: #087f5b;
+
+    margin: 8px 0;
+}
+
+
+/* =========================
+   TIMELINE
+========================= */
+
+.timeline {
+
+    margin-top: 18px;
+
+    background: #f8fbfa;
+
+    border-radius: 16px;
+
+    padding: 18px;
+}
+
+.timeline div {
+
+    padding: 10px;
+
+    border-left: 4px solid #10a66f;
+
+    margin: 8px 0;
+
+    background: white;
+
+    border-radius: 0 10px 10px 0;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+
+    text-align: center;
+
+    padding: 35px;
+
+    color: #6b7e75;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px) {
+
+    .grid,
+    .result-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .weather {
+
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .navbar {
+
+        padding: 15px 4%;
+    }
+
+    .container {
+
+        width: 92%;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🌱 Crop<span>SOS</span>
+    </div>
+
+    <div class="navtag">
+        🤖 AI Crop Rescue Dashboard
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     HERO
+========================= -->
+
+<section class="hero">
+
+    <h1>
+        Save Your Crop with
+        <span>CropSOS</span>
+    </h1>
+
+    <p>
+
+        Turn a diseased-leaf photo,
+        farmer location and weather
+        conditions into a simple crop-health
+        advisory.
+
+        <b>
+            What is wrong, what to do,
+            and when to act.
+        </b>
+
+    </p>
+
+</section>
+
+
+
+<main class="container">
+
+
+<!-- =========================
+     INPUT SECTION
+========================= -->
+
+<div class="grid">
+
+
+<!-- LEFT CARD -->
+
+<section class="card">
+
+    <h2>
+        📸 1. Upload Crop Photo
+    </h2>
+
+
+    <label class="upload">
+
+        <div style="font-size:42px">
+            🍃
+        </div>
+
+        <b>
+            Click to upload a leaf photo
+        </b>
+
+        <p class="small">
+            JPG, PNG or WEBP
+        </p>
+
+
+        <input
+            type="file"
+            id="leafPhoto"
+            accept="image/*"
+        >
+
+
+        <img
+            id="preview"
+            class="preview"
+            alt="Leaf preview"
+        >
+
+    </label>
+
+
+
+    <label class="label">
+        🌾 Crop Type
+    </label>
+
+
+    <select id="crop">
+
+        <option>
+            Tomato
+        </option>
+
+        <option>
+            Rice
+        </option>
+
+        <option>
+            Chilli
+        </option>
+
+        <option>
+            Cotton
+        </option>
+
+        <option>
+            Groundnut
+        </option>
+
+        <option>
+            Other
+        </option>
+
+    </select>
+
+
+
+    <label class="label">
+        📝 Describe the problem
+    </label>
+
+
+    <textarea
+        id="symptoms"
+        rows="4"
+        placeholder="Example: yellow spots, curling leaves, white powder..."
+    ></textarea>
+
+
+</section>
+
+
+
+<!-- RIGHT CARD -->
+
+<section class="card">
+
+    <h2>
+        📍 2. Farm Location & Weather
+    </h2>
+
+
+    <label class="label">
+        Farmer Location
+    </label>
+
+
+    <div class="location-row">
+
+        <input
+            id="location"
+            type="text"
+            placeholder="Village / City"
+        >
+
+
+        <button
+            class="gps"
+            onclick="getLocation()"
+        >
+
+            📍 GPS
+
+        </button>
+
+    </div>
+
+
+
+    <label class="label">
+        🌦️ Weather Signals
+    </label>
+
+
+    <div class="weather">
+
+
+        <div class="weather-box">
+
+            🌡️
+
+            <strong id="temp">
+                31°C
+            </strong>
+
+            Temperature
+
+        </div>
+
+
+
+        <div class="weather-box">
+
+            💧
+
+            <strong id="humidity">
+                72%
+            </strong>
+
+            Humidity
+
+        </div>
+
+
+
+        <div class="weather-box">
+
+            🌧️
+
+            <strong id="rain">
+                30%
+            </strong>
+
+            Rain
+
+        </div>
+
+
+
+        <div class="weather-box">
+
+            💨
+
+            <strong id="wind">
+                12 km/h
+            </strong>
+
+            Wind
+
+        </div>
+
+
+    </div>
+
+
+    <p class="small">
+
+        Demo weather values are shown.
+        Connect a weather API for live data.
+
+    </p>
+
+
+
+    <button
+        class="analyze"
+        onclick="analyzeCrop()"
+    >
+
+        🔍 ANALYZE CROP WITH CropSOS AI
+
+    </button>
+
+
+</section>
+
+</div>
+
+
+
+<!-- =========================
+     RESULT
+========================= -->
+
+<section
+    class="card result"
+    id="result"
+>
+
+
+    <h2>
+        🧠 CropSOS Advisory
+    </h2>
+
+
+
+    <div class="result-grid">
+
+
+        <!-- DIAGNOSIS -->
+
+        <div class="result-card disease">
+
+            <h3>
+                🔎 What's wrong?
+            </h3>
+
+
+            <span class="badge">
+                AI ESTIMATE
+            </span>
+
+
+            <div
+                class="score"
+                id="confidence"
+            >
+                87%
+            </div>
+
+
+            <p id="diseaseText">
+
+                Possible fungal leaf disease.
+
+            </p>
+
+
+            <p class="small">
+
+                Prototype result.
+                Verify diagnosis with an
+                agricultural expert.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- TREATMENT -->
+
+        <div class="result-card treatment">
+
+            <h3>
+                💊 What should I do?
+            </h3>
+
+
+            <p id="treatmentText">
+
+                Remove heavily affected leaves,
+                improve air circulation and follow
+                locally approved crop-protection
+                guidance.
+
+            </p>
+
+        </div>
+
+
+
+        <!-- ACTION -->
+
+        <div class="result-card action">
+
+            <h3>
+                ⏰ When is it safe to act?
+            </h3>
+
+
+            <p id="actionText">
+
+                Prefer a dry weather window
+                and avoid treatment immediately
+                before rainfall.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- TIMELINE -->
+
+    <div class="timeline">
+
+        <h3>
+            📅 Action Timeline
+        </h3>
+
+
+        <div>
+
+            🟢
+
+            <b>
+                Now:
+            </b>
+
+            Inspect nearby plants and isolate
+            badly affected leaves.
+
+        </div>
+
+
+        <div>
+
+            🟡
+
+            <b>
+                Next 24 hours:
+            </b>
+
+            Monitor humidity, rain probability
+            and disease spread.
+
+        </div>
+
+
+        <div>
+
+            🔵
+
+            <b>
+                Best window:
+            </b>
+
+            Act during a suitable dry period
+            according to approved local guidance.
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer class="footer">
+
+    🌱
+
+    <b>
+        CropSOS
+    </b>
+
+    — AI-powered crop health
+    decision support
+
+    <br>
+
+    <span class="small">
+
+        Hackathon Prototype •
+        Built for smarter,
+        faster farm decisions
+
+    </span>
+
+</footer>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* =========================
+   IMAGE PREVIEW
+========================= */
+
+const photo =
+    document.getElementById("leafPhoto");
+
+const preview =
+    document.getElementById("preview");
+
+
+photo.addEventListener(
+    "change",
+    function() {
+
+        const file =
+            this.files[0];
+
+
+        if(file) {
+
+            preview.src =
+                URL.createObjectURL(file);
+
+            preview.style.display =
+                "block";
+        }
+
+    }
+);
+
+
+
+/* =========================
+   GPS LOCATION
+========================= */
+
+function getLocation() {
+
+    if(!navigator.geolocation) {
+
+        alert(
+            "GPS is not supported by this browser."
+        );
+
+        return;
+    }
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            const latitude =
+                position.coords.latitude;
+
+            const longitude =
+                position.coords.longitude;
+
+
+            document.getElementById(
+                "location"
+            ).value =
+
+                latitude.toFixed(5)
+                +
+                ", "
+                +
+                longitude.toFixed(5);
+
+        },
+
+
+        function() {
+
+            alert(
+                "Location permission was not allowed. Please enter your village/city manually."
+            );
+
+        }
+
+    );
+
+}
+
+
+
+/* =========================
+   CROP ANALYSIS
+========================= */
+
+function analyzeCrop() {
+
+
+    const crop =
+        document.getElementById(
+            "crop"
+        ).value;
+
+
+    const symptoms =
+        document.getElementById(
+            "symptoms"
+        ).value.toLowerCase();
+
+
+    let disease =
+        "Possible fungal leaf disease";
+
+
+    let treatment =
+        "Remove severely affected leaves, improve air circulation and follow locally approved crop-protection guidance.";
+
+
+    let confidence =
+        "87%";
+
+
+
+    /* POWDERY MILDEW */
+
+    if(
+
+        symptoms.includes("white")
+        ||
+        symptoms.includes("powder")
+
+    ) {
+
+        disease =
+            "Possible powdery mildew";
+
+
+        treatment =
+            "Improve airflow, avoid unnecessary leaf wetness and follow locally approved treatment guidance for the crop.";
+
+
+        confidence =
+            "91%";
+
+    }
+
+
+
+    /* LEAF SPOTS */
+
+    else if(
+
+        symptoms.includes("yellow")
+        ||
+        symptoms.includes("spot")
+
+    ) {
+
+        disease =
+            "Possible leaf-spot / fungal stress";
+
+
+        treatment =
+            "Remove severely affected foliage, keep the crop area clean and use locally approved crop-protection measures if confirmed.";
+
+
+        confidence =
+            "86%";
+
+    }
+
+
+
+    /* CURLING */
+
+    else if(
+
+        symptoms.includes("curl")
+
+    ) {
+
+        disease =
+            "Possible leaf-curl stress";
+
+
+        treatment =
+            "Inspect plants for pests, nutrient stress and environmental causes before choosing a treatment.";
+
+
+        confidence =
+            "79%";
+
+    }
+
+
+
+    /* UPDATE RESULT */
+
+    document.getElementById(
+        "confidence"
+    ).textContent =
+        confidence;
+
+
+    document.getElementById(
+        "diseaseText"
+    ).textContent =
+
+        disease
+        +
+        " detected in "
+        +
+        crop
+        +
+        ".";
+
+
+    document.getElementById(
+        "treatmentText"
+    ).textContent =
+        treatment;
+
+
+
+    /* WEATHER CHECK */
+
+    const rain =
+        parseInt(
+            document.getElementById(
+                "rain"
+            ).textContent
+        );
+
+
+    if(rain >= 60) {
+
+        document.getElementById(
+            "actionText"
+        ).textContent =
+
+            "Rain probability is high. Avoid spraying now and wait for a suitable dry weather window.";
+
+    }
+
+    else {
+
+        document.getElementById(
+            "actionText"
+        ).textContent =
+
+            "Current demo weather suggests a potentially suitable window, but verify the local forecast and product instructions before acting.";
+
+    }
+
+
+
+    /* SHOW RESULT */
+
+    document.getElementById(
+        "result"
+    ).style.display =
+        "block";
+
+
+    /* SCROLL TO RESULT */
+
+    document.getElementById(
+        "result"
+    ).scrollIntoView({
+
+        behavior: "smooth"
+
+    });
+
+}
+
+</script>
+
+
+</body>
+</html>
