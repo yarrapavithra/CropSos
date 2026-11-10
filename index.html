@@ -1,1286 +1,580 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>CropSOS | AI Crop Rescue</title>
+<title>Smart Hostel Management System</title>
 
 <style>
-
-/* =========================
-   BASIC SETTINGS
-========================= */
-
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
-    font-family: "Segoe UI", Arial, sans-serif;
 }
 
 body {
-    background: linear-gradient(
-        135deg,
-        #effff5,
-        #eef8ff,
-        #fff9e8
-    );
-
-    color: #17352a;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #eef4ff;
+    color: #1e293b;
 }
 
-
-/* =========================
-   NAVBAR
-========================= */
-
-.navbar {
-    background: linear-gradient(
-        90deg,
-        #087f5b,
-        #10a66f
-    );
-
+header {
+    background: linear-gradient(120deg, #172554, #2563eb);
     color: white;
-
-    padding: 18px 6%;
-
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    position: sticky;
-    top: 0;
-
-    z-index: 10;
-
-    box-shadow: 0 4px 18px rgba(8,127,91,0.2);
-}
-
-.logo {
-    font-size: 26px;
-    font-weight: 800;
-}
-
-.logo span {
-    color: #ffe066;
-}
-
-.navtag {
-    background: rgba(255,255,255,0.15);
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 13px;
-}
-
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    padding: 55px 6% 30px;
     text-align: center;
+    padding: 30px;
 }
 
-.hero h1 {
-    font-size: clamp(35px,5vw,58px);
-    color: #075e45;
+header h1 {
+    margin: 5px;
 }
 
-.hero h1 span {
-    color: #f59f00;
+nav {
+    background: #172554;
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
-.hero p {
-    max-width: 760px;
-    margin: 15px auto;
-
-    color: #557064;
-
-    font-size: 17px;
-    line-height: 1.6;
+nav button {
+    background: transparent;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 6px;
 }
 
-
-/* =========================
-   MAIN CONTAINER
-========================= */
+nav button:hover,
+nav button.active {
+    background: #3b82f6;
+}
 
 .container {
-    width: 88%;
-    max-width: 1200px;
-    margin: auto;
+    width: 90%;
+    max-width: 1100px;
+    margin: 30px auto;
 }
 
+.page {
+    display: none;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px #cbd5e1;
+}
 
-/* =========================
-   GRID
-========================= */
+.page.active {
+    display: block;
+}
 
-.grid {
+h2 {
+    color: #1e40af;
+}
+
+.cards {
     display: grid;
-
-    grid-template-columns: 1fr 1fr;
-
-    gap: 22px;
-
-    margin: 25px 0;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    margin-top: 25px;
 }
-
-
-/* =========================
-   CARDS
-========================= */
 
 .card {
-    background: white;
-
-    border-radius: 22px;
-
+    background: #dbeafe;
     padding: 25px;
-
-    box-shadow: 0 12px 35px rgba(23,53,42,0.08);
-
-    border: 1px solid #dcefe6;
+    text-align: center;
+    border-radius: 12px;
 }
 
 .card h2 {
-    font-size: 21px;
-
-    margin-bottom: 18px;
-
-    color: #075e45;
+    font-size: 30px;
+    color: #1d4ed8;
 }
 
-
-/* =========================
-   FORM
-========================= */
-
-.label {
-    font-weight: 700;
-
-    font-size: 14px;
-
-    margin: 15px 0 8px;
-
-    display: block;
-}
-
-input,
-textarea,
-select {
-
+input, select, textarea {
     width: 100%;
-
-    padding: 13px 14px;
-
-    border: 2px solid #dcefe6;
-
-    border-radius: 12px;
-
-    outline: none;
-
-    font-size: 15px;
-
-    background: #fbfffd;
+    padding: 13px;
+    margin: 9px 0;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
 }
 
-input:focus,
-textarea:focus {
-
-    border-color: #10a66f;
+textarea {
+    height: 100px;
 }
-
-
-/* =========================
-   LOCATION
-========================= */
-
-.location-row {
-
-    display: grid;
-
-    grid-template-columns: 1fr auto;
-
-    gap: 10px;
-}
-
-
-/* =========================
-   BUTTONS
-========================= */
-
-button {
-
-    border: none;
-
-    border-radius: 12px;
-
-    padding: 13px 18px;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-button:hover {
-
-    transform: translateY(-2px);
-}
-
-.gps {
-
-    background: #e7f5ff;
-
-    color: #1971c2;
-}
-
-.analyze {
-
-    width: 100%;
-
-    margin-top: 18px;
-
-    background: linear-gradient(
-        90deg,
-        #087f5b,
-        #10a66f
-    );
-
-    color: white;
-
-    font-size: 16px;
-}
-
-
-/* =========================
-   IMAGE UPLOAD
-========================= */
-
-.upload {
-
-    border: 2px dashed #75c9a5;
-
-    border-radius: 18px;
-
-    padding: 25px;
-
-    text-align: center;
-
-    background: #f5fff9;
-
-    cursor: pointer;
-}
-
-.upload input {
-
-    display: none;
-}
-
-.preview {
-
-    max-width: 100%;
-
-    max-height: 220px;
-
-    border-radius: 15px;
-
-    margin-top: 15px;
-
-    display: none;
-}
-
-
-/* =========================
-   WEATHER
-========================= */
-
-.weather {
-
-    display: grid;
-
-    grid-template-columns: repeat(4,1fr);
-
-    gap: 10px;
-}
-
-.weather-box {
-
-    padding: 15px;
-
-    border-radius: 15px;
-
-    background: #f3faff;
-
-    text-align: center;
-}
-
-.weather-box strong {
-
-    display: block;
-
-    font-size: 20px;
-
-    color: #1971c2;
-
-    margin: 6px 0;
-}
-
-
-/* =========================
-   SMALL TEXT
-========================= */
-
-.small {
-
-    font-size: 13px;
-
-    color: #71857b;
-
-    margin-top: 8px;
-}
-
-
-/* =========================
-   RESULT SECTION
-========================= */
-
-.result {
-
-    margin: 30px 0;
-
-    display: none;
-}
-
-.result-grid {
-
-    display: grid;
-
-    grid-template-columns:
-        1fr 1fr 1fr;
-
-    gap: 18px;
-}
-
-.result-card {
-
-    border-radius: 18px;
-
-    padding: 20px;
-
-    background: white;
-}
-
-
-/* DISEASE */
-
-.disease {
-
-    border-left: 6px solid #f59f00;
-
-    background: #fff9e6;
-}
-
-
-/* TREATMENT */
-
-.treatment {
-
-    border-left: 6px solid #10a66f;
-
-    background: #effcf5;
-}
-
-
-/* ACTION */
 
 .action {
-
-    border-left: 6px solid #1971c2;
-
-    background: #eef7ff;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
-.result-card h3 {
-
-    margin-bottom: 10px;
+.action:hover {
+    background: #172554;
 }
 
-
-/* =========================
-   BADGE
-========================= */
-
-.badge {
-
-    display: inline-block;
-
-    padding: 7px 11px;
-
-    border-radius: 20px;
-
-    font-size: 12px;
-
-    font-weight: 700;
-
-    background: #fff3bf;
-
-    color: #8d5d00;
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
 }
 
-
-/* =========================
-   CONFIDENCE
-========================= */
-
-.score {
-
-    font-size: 31px;
-
-    font-weight: 800;
-
-    color: #087f5b;
-
-    margin: 8px 0;
-}
-
-
-/* =========================
-   TIMELINE
-========================= */
-
-.timeline {
-
-    margin-top: 18px;
-
-    background: #f8fbfa;
-
-    border-radius: 16px;
-
-    padding: 18px;
-}
-
-.timeline div {
-
-    padding: 10px;
-
-    border-left: 4px solid #10a66f;
-
-    margin: 8px 0;
-
-    background: white;
-
-    border-radius: 0 10px 10px 0;
-}
-
-
-/* =========================
-   FOOTER
-========================= */
-
-.footer {
-
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
     text-align: center;
-
-    padding: 35px;
-
-    color: #6b7e75;
 }
 
+th {
+    background: #1e40af;
+    color: white;
+}
 
-/* =========================
-   MOBILE
-========================= */
+.service {
+    background: #eff6ff;
+    padding: 18px;
+    margin: 12px 0;
+    border-left: 5px solid #2563eb;
+    border-radius: 7px;
+}
 
-@media(max-width:800px) {
+footer {
+    background: #172554;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
 
-    .grid,
-    .result-grid {
-
-        grid-template-columns: 1fr;
-    }
-
-    .weather {
-
-        grid-template-columns: repeat(2,1fr);
-    }
-
-    .navbar {
-
-        padding: 15px 4%;
-    }
-
+@media(max-width:600px) {
     .container {
+        width: 95%;
+    }
 
-        width: 92%;
+    .page {
+        padding: 16px;
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 550px;
     }
 }
-
 </style>
-
 </head>
-
 
 <body>
 
+<header>
+    <h1>SMART HOSTEL MANAGEMENT</h1>
+    <p>Your Comfort, Our Responsibility</p>
+</header>
 
-<!-- =========================
-     NAVBAR
-========================= -->
+<!-- NAVIGATION BAR -->
 
-<nav class="navbar">
-
-    <div class="logo">
-        🌱 Crop<span>SOS</span>
-    </div>
-
-    <div class="navtag">
-        🤖 AI Crop Rescue Dashboard
-    </div>
-
+<nav>
+    <button class="active" onclick="showPage('home',this)">Home</button>
+    <button onclick="showPage('about',this)">About</button>
+    <button onclick="showPage('services',this)">Services</button>
+    <button onclick="showPage('contact',this)">Contact</button>
+    <button onclick="showPage('login',this)">Login</button>
+    <button onclick="showPage('student',this)">Student Details</button>
+    <button onclick="showPage('history',this)">History</button>
 </nav>
 
+<div class="container">
 
+<!-- HOME -->
 
-<!-- =========================
-     HERO
-========================= -->
+<section id="home" class="page active">
 
-<section class="hero">
+<h2>Welcome to Our Hostel</h2>
 
-    <h1>
-        Save Your Crop with
-        <span>CropSOS</span>
-    </h1>
+<p>
+Our Hostel Management System helps manage
+student information, rooms, fees and hostel services.
+</p>
 
-    <p>
+<div class="cards">
 
-        Turn a diseased-leaf photo,
-        farmer location and weather
-        conditions into a simple crop-health
-        advisory.
+<div class="card">
+<h3>Total Students</h3>
+<h2 id="total">0</h2>
+</div>
 
-        <b>
-            What is wrong, what to do,
-            and when to act.
-        </b>
+<div class="card">
+<h3>Total Rooms</h3>
+<h2>30</h2>
+</div>
 
-    </p>
+<div class="card">
+<h3>Available Rooms</h3>
+<h2 id="available">30</h2>
+</div>
 
-</section>
+</div>
 
-
-
-<main class="container">
-
-
-<!-- =========================
-     INPUT SECTION
-========================= -->
-
-<div class="grid">
-
-
-<!-- LEFT CARD -->
-
-<section class="card">
-
-    <h2>
-        📸 1. Upload Crop Photo
-    </h2>
-
-
-    <label class="upload">
-
-        <div style="font-size:42px">
-            🍃
-        </div>
-
-        <b>
-            Click to upload a leaf photo
-        </b>
-
-        <p class="small">
-            JPG, PNG or WEBP
-        </p>
-
-
-        <input
-            type="file"
-            id="leafPhoto"
-            accept="image/*"
-        >
-
-
-        <img
-            id="preview"
-            class="preview"
-            alt="Leaf preview"
-        >
-
-    </label>
-
-
-
-    <label class="label">
-        🌾 Crop Type
-    </label>
-
-
-    <select id="crop">
-
-        <option>
-            Tomato
-        </option>
-
-        <option>
-            Rice
-        </option>
-
-        <option>
-            Chilli
-        </option>
-
-        <option>
-            Cotton
-        </option>
-
-        <option>
-            Groundnut
-        </option>
-
-        <option>
-            Other
-        </option>
-
-    </select>
-
-
-
-    <label class="label">
-        📝 Describe the problem
-    </label>
-
-
-    <textarea
-        id="symptoms"
-        rows="4"
-        placeholder="Example: yellow spots, curling leaves, white powder..."
-    ></textarea>
-
+<br>
+<button class="action" onclick="showPage('student')">
+Register Student
+</button>
 
 </section>
 
+<!-- ABOUT -->
 
+<section id="about" class="page">
 
-<!-- RIGHT CARD -->
+<h2>About Our Hostel</h2>
 
-<section class="card">
+<p>
+Our hostel provides a comfortable and safe
+environment for students. We offer clean rooms,
+quality food, drinking water and study facilities.
+</p>
 
-    <h2>
-        📍 2. Farm Location & Weather
-    </h2>
+<h3>Our Facilities</h3>
 
+<ul>
+<li>24 Hours Water Supply</li>
+<li>Wi-Fi Facility</li>
+<li>Clean and Comfortable Rooms</li>
+<li>Study Hall</li>
+<li>Food and Dining Facility</li>
+<li>Security and Warden Support</li>
+</ul>
 
-    <label class="label">
-        Farmer Location
-    </label>
+</section>
 
+<!-- SERVICES -->
 
-    <div class="location-row">
+<section id="services" class="page">
 
-        <input
-            id="location"
-            type="text"
-            placeholder="Village / City"
-        >
+<h2>Our Services</h2>
 
+<div class="service">
+<h3>Student Registration</h3>
+<p>Register and maintain student details.</p>
+</div>
 
-        <button
-            class="gps"
-            onclick="getLocation()"
-        >
+<div class="service">
+<h3>Room Allocation</h3>
+<p>Manage hostel rooms and room availability.</p>
+</div>
 
-            📍 GPS
+<div class="service">
+<h3>Fee Management</h3>
+<p>Maintain student hostel fee information.</p>
+</div>
 
-        </button>
+<div class="service">
+<h3>Complaint Management</h3>
+<p>Students can submit their hostel complaints.</p>
+</div>
 
-    </div>
+<div class="service">
+<h3>Student History</h3>
+<p>View previously registered student records.</p>
+</div>
 
+</section>
 
+<!-- CONTACT -->
 
-    <label class="label">
-        🌦️ Weather Signals
-    </label>
+<section id="contact" class="page">
 
+<h2>Contact Us</h2>
 
-    <div class="weather">
+<p><b>Hostel Office:</b> Hostel Administration</p>
+<p><b>Email:</b> hostel@example.com</p>
+<p><b>Phone:</b> 9876543210</p>
 
+<h3>Send a Message</h3>
 
-        <div class="weather-box">
+<form id="contactForm">
 
-            🌡️
+<input id="contactName"
+placeholder="Your Name" required>
 
-            <strong id="temp">
-                31°C
-            </strong>
+<input id="contactEmail"
+type="email"
+placeholder="Your Email" required>
 
-            Temperature
+<textarea id="contactMessage"
+placeholder="Your Message" required></textarea>
 
-        </div>
+<button class="action">Send Message</button>
 
+</form>
 
+</section>
 
-        <div class="weather-box">
+<!-- LOGIN -->
 
-            💧
+<section id="login" class="page">
 
-            <strong id="humidity">
-                72%
-            </strong>
+<h2>Admin Login</h2>
 
-            Humidity
+<form id="loginForm">
 
-        </div>
+<input id="username"
+placeholder="Enter Username" required>
 
+<input id="password"
+type="password"
+placeholder="Enter Password" required>
 
+<button class="action">Login</button>
 
-        <div class="weather-box">
+</form>
 
-            🌧️
+<p id="loginMessage"></p>
 
-            <strong id="rain">
-                30%
-            </strong>
+<p><small>Demo login: admin / admin123</small></p>
 
-            Rain
+</section>
 
-        </div>
+<!-- STUDENT DETAILS -->
 
+<section id="student" class="page">
 
+<h2>Student Registration</h2>
 
-        <div class="weather-box">
+<form id="studentForm">
 
-            💨
+<input id="name"
+placeholder="Student Name" required>
 
-            <strong id="wind">
-                12 km/h
-            </strong>
+<input id="roll"
+placeholder="Roll Number" required>
 
-            Wind
+<input id="course"
+placeholder="Course / Branch" required>
 
-        </div>
+<input id="phone"
+type="tel"
+placeholder="Phone Number" required>
 
+<select id="room" required>
+<option value="">Select Room</option>
+<option>Room 101</option>
+<option>Room 102</option>
+<option>Room 103</option>
+<option>Room 104</option>
+<option>Room 105</option>
+</select>
 
-    </div>
+<button class="action">Add Student</button>
 
+</form>
 
-    <p class="small">
+<h2>Registered Students</h2>
 
-        Demo weather values are shown.
-        Connect a weather API for live data.
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Roll No</th>
+<th>Course</th>
+<th>Phone</th>
+<th>Room</th>
+</tr>
+</thead>
 
-    </p>
+<tbody id="studentList"></tbody>
+</table>
+</div>
 
+</section>
 
+<!-- HISTORY -->
 
-    <button
-        class="analyze"
-        onclick="analyzeCrop()"
-    >
+<section id="history" class="page">
 
-        🔍 ANALYZE CROP WITH CropSOS AI
+<h2>Student Registration History</h2>
 
-    </button>
+<p>Previously registered student details.</p>
 
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr>
+<th>S.No</th>
+<th>Name</th>
+<th>Roll Number</th>
+<th>Course</th>
+<th>Room</th>
+<th>Date</th>
+</tr>
+</thead>
+
+<tbody id="historyList"></tbody>
+</table>
+</div>
 
 </section>
 
 </div>
 
-
-
-<!-- =========================
-     RESULT
-========================= -->
-
-<section
-    class="card result"
-    id="result"
->
-
-
-    <h2>
-        🧠 CropSOS Advisory
-    </h2>
-
-
-
-    <div class="result-grid">
-
-
-        <!-- DIAGNOSIS -->
-
-        <div class="result-card disease">
-
-            <h3>
-                🔎 What's wrong?
-            </h3>
-
-
-            <span class="badge">
-                AI ESTIMATE
-            </span>
-
-
-            <div
-                class="score"
-                id="confidence"
-            >
-                87%
-            </div>
-
-
-            <p id="diseaseText">
-
-                Possible fungal leaf disease.
-
-            </p>
-
-
-            <p class="small">
-
-                Prototype result.
-                Verify diagnosis with an
-                agricultural expert.
-
-            </p>
-
-        </div>
-
-
-
-        <!-- TREATMENT -->
-
-        <div class="result-card treatment">
-
-            <h3>
-                💊 What should I do?
-            </h3>
-
-
-            <p id="treatmentText">
-
-                Remove heavily affected leaves,
-                improve air circulation and follow
-                locally approved crop-protection
-                guidance.
-
-            </p>
-
-        </div>
-
-
-
-        <!-- ACTION -->
-
-        <div class="result-card action">
-
-            <h3>
-                ⏰ When is it safe to act?
-            </h3>
-
-
-            <p id="actionText">
-
-                Prefer a dry weather window
-                and avoid treatment immediately
-                before rainfall.
-
-            </p>
-
-        </div>
-
-
-    </div>
-
-
-
-    <!-- TIMELINE -->
-
-    <div class="timeline">
-
-        <h3>
-            📅 Action Timeline
-        </h3>
-
-
-        <div>
-
-            🟢
-
-            <b>
-                Now:
-            </b>
-
-            Inspect nearby plants and isolate
-            badly affected leaves.
-
-        </div>
-
-
-        <div>
-
-            🟡
-
-            <b>
-                Next 24 hours:
-            </b>
-
-            Monitor humidity, rain probability
-            and disease spread.
-
-        </div>
-
-
-        <div>
-
-            🔵
-
-            <b>
-                Best window:
-            </b>
-
-            Act during a suitable dry period
-            according to approved local guidance.
-
-        </div>
-
-    </div>
-
-
-</section>
-
-
-</main>
-
-
-
-<!-- =========================
-     FOOTER
-========================= -->
-
-<footer class="footer">
-
-    🌱
-
-    <b>
-        CropSOS
-    </b>
-
-    — AI-powered crop health
-    decision support
-
-    <br>
-
-    <span class="small">
-
-        Hackathon Prototype •
-        Built for smarter,
-        faster farm decisions
-
-    </span>
-
+<footer>
+<p>Smart Hostel Management System</p>
+<p>FSD College Project</p>
 </footer>
-
-
-
-<!-- =========================
-     JAVASCRIPT
-========================= -->
 
 <script>
 
+// NAVIGATION
 
-/* =========================
-   IMAGE PREVIEW
-========================= */
+function showPage(id, btn) {
 
-const photo =
-    document.getElementById("leafPhoto");
+    document.querySelectorAll(".page").forEach(page => {
+        page.classList.remove("active");
+    });
 
-const preview =
-    document.getElementById("preview");
+    document.getElementById(id).classList.add("active");
 
+    document.querySelectorAll("nav button").forEach(b => {
+        b.classList.remove("active");
+    });
 
-photo.addEventListener(
-    "change",
-    function() {
+    if(btn) btn.classList.add("active");
 
-        const file =
-            this.files[0];
+    displayStudents();
+}
 
+// SAVE DATA
 
-        if(file) {
-
-            preview.src =
-                URL.createObjectURL(file);
-
-            preview.style.display =
-                "block";
-        }
-
-    }
+let students = JSON.parse(
+    localStorage.getItem("hostelStudents") || "[]"
 );
 
+// STUDENT REGISTRATION
 
+document.getElementById("studentForm")
+.addEventListener("submit", function(e) {
 
-/* =========================
-   GPS LOCATION
-========================= */
+    e.preventDefault();
 
-function getLocation() {
+    let student = {
+        name: document.getElementById("name").value.trim(),
+        roll: document.getElementById("roll").value.trim(),
+        course: document.getElementById("course").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        room: document.getElementById("room").value,
+        date: new Date().toLocaleDateString()
+    };
 
-    if(!navigator.geolocation) {
-
-        alert(
-            "GPS is not supported by this browser."
-        );
-
+    if(students.some(s => s.roll === student.roll)) {
+        alert("Roll Number Already Exists!");
         return;
     }
 
+    if(students.filter(s => s.room === student.room).length >= 4) {
+        alert("This Room Is Full!");
+        return;
+    }
 
-    navigator.geolocation.getCurrentPosition(
+    students.push(student);
 
-        function(position) {
-
-            const latitude =
-                position.coords.latitude;
-
-            const longitude =
-                position.coords.longitude;
-
-
-            document.getElementById(
-                "location"
-            ).value =
-
-                latitude.toFixed(5)
-                +
-                ", "
-                +
-                longitude.toFixed(5);
-
-        },
-
-
-        function() {
-
-            alert(
-                "Location permission was not allowed. Please enter your village/city manually."
-            );
-
-        }
-
+    localStorage.setItem(
+        "hostelStudents",
+        JSON.stringify(students)
     );
 
-}
+    this.reset();
 
+    displayStudents();
 
+    alert("Student Registered Successfully!");
+});
 
-/* =========================
-   CROP ANALYSIS
-========================= */
+// DISPLAY STUDENTS AND HISTORY
 
-function analyzeCrop() {
+function displayStudents() {
 
+    let studentList = document.getElementById("studentList");
+    let historyList = document.getElementById("historyList");
 
-    const crop =
-        document.getElementById(
-            "crop"
-        ).value;
+    studentList.replaceChildren();
+    historyList.replaceChildren();
 
+    students.forEach((s, i) => {
 
-    const symptoms =
-        document.getElementById(
-            "symptoms"
-        ).value.toLowerCase();
+        let row = studentList.insertRow();
 
+        [s.name, s.roll, s.course, s.phone, s.room]
+        .forEach(value => {
+            let cell = row.insertCell();
+            cell.textContent = value;
+        });
 
-    let disease =
-        "Possible fungal leaf disease";
+        let historyRow = historyList.insertRow();
 
-
-    let treatment =
-        "Remove severely affected leaves, improve air circulation and follow locally approved crop-protection guidance.";
-
-
-    let confidence =
-        "87%";
-
-
-
-    /* POWDERY MILDEW */
-
-    if(
-
-        symptoms.includes("white")
-        ||
-        symptoms.includes("powder")
-
-    ) {
-
-        disease =
-            "Possible powdery mildew";
-
-
-        treatment =
-            "Improve airflow, avoid unnecessary leaf wetness and follow locally approved treatment guidance for the crop.";
-
-
-        confidence =
-            "91%";
-
-    }
-
-
-
-    /* LEAF SPOTS */
-
-    else if(
-
-        symptoms.includes("yellow")
-        ||
-        symptoms.includes("spot")
-
-    ) {
-
-        disease =
-            "Possible leaf-spot / fungal stress";
-
-
-        treatment =
-            "Remove severely affected foliage, keep the crop area clean and use locally approved crop-protection measures if confirmed.";
-
-
-        confidence =
-            "86%";
-
-    }
-
-
-
-    /* CURLING */
-
-    else if(
-
-        symptoms.includes("curl")
-
-    ) {
-
-        disease =
-            "Possible leaf-curl stress";
-
-
-        treatment =
-            "Inspect plants for pests, nutrient stress and environmental causes before choosing a treatment.";
-
-
-        confidence =
-            "79%";
-
-    }
-
-
-
-    /* UPDATE RESULT */
-
-    document.getElementById(
-        "confidence"
-    ).textContent =
-        confidence;
-
-
-    document.getElementById(
-        "diseaseText"
-    ).textContent =
-
-        disease
-        +
-        " detected in "
-        +
-        crop
-        +
-        ".";
-
-
-    document.getElementById(
-        "treatmentText"
-    ).textContent =
-        treatment;
-
-
-
-    /* WEATHER CHECK */
-
-    const rain =
-        parseInt(
-            document.getElementById(
-                "rain"
-            ).textContent
-        );
-
-
-    if(rain >= 60) {
-
-        document.getElementById(
-            "actionText"
-        ).textContent =
-
-            "Rain probability is high. Avoid spraying now and wait for a suitable dry weather window.";
-
-    }
-
-    else {
-
-        document.getElementById(
-            "actionText"
-        ).textContent =
-
-            "Current demo weather suggests a potentially suitable window, but verify the local forecast and product instructions before acting.";
-
-    }
-
-
-
-    /* SHOW RESULT */
-
-    document.getElementById(
-        "result"
-    ).style.display =
-        "block";
-
-
-    /* SCROLL TO RESULT */
-
-    document.getElementById(
-        "result"
-    ).scrollIntoView({
-
-        behavior: "smooth"
+        [i + 1, s.name, s.roll, s.course, s.room, s.date]
+        .forEach(value => {
+            let cell = historyRow.insertCell();
+            cell.textContent = value;
+        });
 
     });
 
+    document.getElementById("total").textContent =
+        students.length;
+
+    document.getElementById("available").textContent =
+        30 - students.length;
 }
 
-</script>
+// LOGIN DEMO
 
+document.getElementById("loginForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if(user === "admin" && pass === "admin123") {
+
+        document.getElementById("loginMessage").textContent =
+            "Login Successful! Welcome Admin.";
+
+        document.getElementById("loginMessage").style.color =
+            "green";
+
+    } else {
+
+        document.getElementById("loginMessage").textContent =
+            "Invalid Username or Password!";
+
+        document.getElementById("loginMessage").style.color =
+            "red";
+    }
+
+});
+
+// CONTACT FORM
+
+document.getElementById("contactForm")
+.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    alert("Your Message Has Been Submitted Successfully!");
+
+    this.reset();
+
+});
+
+displayStudents();
+
+</script>
 
 </body>
 </html>
